@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<title>Iran Military Cost Tracker</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#0b0f1a;
+color:white;
+text-align:center;
+overflow-x:hidden;
+padding-bottom:80px; /* fix ad overlap */
+}
+
+.flag{
+height:12px;
+background:linear-gradient(to right,#239f40 33%,white 33%,white 66%,#da0000 66%);
+background-size:300px;
+animation:flagmove 5s linear infinite;
+}
+
+@keyframes flagmove{
+from{background-position:0}
+to{background-position:300px}
+}
+
+header{
+padding:30px;
+font-size:42px;
+font-weight:bold;
+}
+
+.counter{
+font-size:70px;
+color:#00ffa6;
+}
+
+.learn-btn{
+margin:8px;
+padding:12px 25px;
+font-size:15px;
+background:#00ffa6;
+border:none;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+text-decoration:none;
+display:inline-block;
+color:black;
+}
+
+.learn-btn:hover{
+background:#00cc84;
+transform:scale(1.05);
+box-shadow:0 0 15px #00ffa6;
+}
+
+.section{
+margin-top:70px;
+}
+
+.sub{
+color:#aaa;
+}
+
+.human-box{
+background:#151b2e;
+padding:25px;
+border-radius:10px;
+width:340px;
+margin:auto;
+font-size:22px;
+}
+
+.cards{
+display:flex;
+justify-content:center;
+gap:40px;
+flex-wrap:wrap;
+margin-top:30px;
+}
+
+.card{
+background:#151c39;
+padding:25px;
+border-radius:10px;
+width:220px;
+}
+
+.card h3{
+color:#00ffa6;
+}
+
+/* MODAL */
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+opacity:0;
+transition:0.4s;
+z-index:999;
+}
+
+.modal.show{
+display:block;
+opacity:1;
+}
+
+.modal-content{
+background:#111;
+margin:5% auto;
+padding:30px;
+width:60%;
+border-radius:12px;
+transform:translateY(-40px);
+opacity:0;
+transition:0.4s;
+max-height:80vh;
+overflow-y:auto;
+text-align:left;
+}
+
+.modal.show .modal-content{
+transform:translateY(0);
+opacity:1;
+}
+
+.close{
+float:right;
+font-size:25px;
+cursor:pointer;
+}
+
+footer{
+margin-top:80px;
+padding:30px;
+background:#090d18;
+color:#aaa;
+}
+
+/* STICKY ADS */
+.ads-footer{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+background:#111;
+padding:10px;
+text-align:center;
+z-index:1000;
+box-shadow:0 -2px 10px rgba(0,0,0,0.5);
+}
+
+.close-ad{
+position:absolute;
+right:10px;
+top:5px;
+cursor:pointer;
+font-size:18px;
+color:#aaa;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="flag"></div>
+
+<header>IRAN MILITARY COST TRACKER</header>
+
+<button class="learn-btn" onclick="openInfo()">About</button>
+<button class="learn-btn" onclick="openPrivacy()">Privacy</button>
+
+<div class="counter" id="counter">$0</div>
+
+<p class="sub">Real-time estimate since Feb 28, 2026</p>
+
+<p class="sub">
+This is an estimated real-time tracker based on available data.
+</p>
+
+<!-- HUMAN IMPACT -->
+<div class="section">
+
+<h2>Human Impact</h2>
+
+<div class="human-box">
+<p><b>Total Casualties</b></p>
+<p>Killed: <span id="killed"></span></p>
+<p>Injured: <span id="injured"></span></p>
+</div>
+
+<p class="sub">
+Casualty figures are based on HRANA  & Ministry of Health of Iran reports. Updated every 12 hours.
+</p>
+
+</div>
+
+<!-- BUILD -->
+<div class="section">
+
+<h2>What This Money Could Have Built</h2>
+
+<div class="cards">
+<div class="card"><h3 id="homes">0</h3>Homes</div>
+<div class="card"><h3 id="schools">0</h3>Schools</div>
+<div class="card"><h3 id="hospitals">0</h3>Hospitals</div>
+</div>
+
+</div>
+
+<!-- HUMANITARIAN -->
+<div class="section">
+
+<h2>Potential Humanitarian Assistance</h2>
+
+<div class="cards">
+<div class="card"><h3 id="cancer">0</h3>Cancer Treatments</div>
+<div class="card"><h3 id="food">0</h3>Children Fed (1 Year)</div>
+</div>
+
+</div>
+
+<footer>
+Sources<br><br>
+HRANA reports<br>
+OSINT data<br>
+Military estimates<br><br>
+
+Contact: iranmilitarycost@gmail.com
+</footer>
+
+<!-- ABOUT -->
+<div id="infoModal" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeInfo()">×</span>
+
+<h2>About This Project</h2>
+
+<p>This website provides a real-time estimate of military spending.</p>
+<p>The figures are approximate and may vary by 5–10%.</p>
+<p>Only direct military costs are included.</p>
+<p>Economic and infrastructure losses are not included.</p>
+<p>The goal is to illustrate the financial scale of war.</p>
+
+</div>
+</div>
+
+<!-- PRIVACY -->
+<div id="privacyModal" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closePrivacy()">×</span>
+
+<h2>Privacy Policy</h2>
+
+<p>This website does not collect personal data directly.</p>
+<p>Third-party services such as Google AdSense may use cookies.</p>
+
+</div>
+</div>
+
+<!-- ADS FOOTER -->
+<div class="ads-footer" id="adsFooter">
+  <span class="close-ad" onclick="closeAd()">×</span>
+
+  <!-- Paste Google AdSense code here -->
+  <div>AdSense Banner</div>
+
+</div>
+
+<script>
+
+/* BASE */
+let baseDate = new Date("2026-03-21")
+let baseCost = 9000000000
+let costPerSecond = 5000
+
+/* HUMAN DATA */
+let killed = 3230
+let injured = 19000
+
+document.getElementById("killed").innerText = killed
+document.getElementById("injured").innerText = injured
+
+/* UPDATE */
+function update(){
+
+let now = new Date()
+let secondsPassed = (now - baseDate) / 1000
+
+let cost = baseCost + (secondsPassed * costPerSecond)
+
+document.getElementById("counter").innerText =
+"$" + Math.round(cost).toLocaleString()
+
+document.getElementById("homes").innerText =
+Math.floor(cost/45000).toLocaleString()
+
+document.getElementById("schools").innerText =
+Math.floor(cost/300000).toLocaleString()
+
+document.getElementById("hospitals").innerText =
+Math.floor(cost/600000).toLocaleString()
+
+document.getElementById("cancer").innerText =
+Math.floor(cost/50000).toLocaleString()
+
+document.getElementById("food").innerText =
+Math.floor(cost/500).toLocaleString()
+
+}
+
+update()
+setInterval(update,50)
+
+/* MODALS */
+function openInfo(){show("infoModal")}
+function closeInfo(){hide("infoModal")}
+
+function openPrivacy(){show("privacyModal")}
+function closePrivacy(){hide("privacyModal")}
+
+function show(id){
+let m = document.getElementById(id)
+m.style.display="block"
+document.body.style.overflow="hidden"
+setTimeout(()=>m.classList.add("show"),10)
+}
+
+function hide(id){
+let m = document.getElementById(id)
+m.classList.remove("show")
+document.body.style.overflow="auto"
+setTimeout(()=>m.style.display="none",400)
+}
+
+/* CLOSE AD */
+function closeAd(){
+document.getElementById("adsFooter").style.display="none"
+}
+
+</script>
+
+</body>
+</html>
