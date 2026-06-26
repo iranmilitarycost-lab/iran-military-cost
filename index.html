@@ -359,10 +359,7 @@ document.getElementById("injured").innerText = injured
 /* UPDATE */
 function update(){
 
-let now = new Date()
-let secondsPassed = (now - baseDate) / 1000
-
-let cost = baseCost + (secondsPassed * costPerSecond)
+let cost = 14989528355;
 
 document.getElementById("counter").innerText =
 "$" + Math.round(cost).toLocaleString()
@@ -385,7 +382,7 @@ Math.floor(cost/500).toLocaleString()
 }
 
 update()
-setInterval(update,50)
+
 
 /* MODALS */
 function openInfo(){show("infoModal")}
